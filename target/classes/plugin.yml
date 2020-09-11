@@ -1,0 +1,7 @@
+name: SkyWars
+version: 1.0
+author: FlyingPrefix
+main: net.flyingprefix.skywars.SkyWars
+commands:
+  setup:
+  forcemap:

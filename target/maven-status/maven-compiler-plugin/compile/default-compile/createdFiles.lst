@@ -1,0 +1,14 @@
+net/flyingprefix/skywars/maps/MapManager.class
+net/flyingprefix/skywars/phase/IngamePhase.class
+net/flyingprefix/skywars/phase/EndPhase.class
+net/flyingprefix/skywars/phase/FriendlyPhase.class
+net/flyingprefix/skywars/teams/TeamManager.class
+net/flyingprefix/skywars/utils/LocationUtil.class
+net/flyingprefix/skywars/SkyWars.class
+net/flyingprefix/skywars/phase/LobbyPhase.class
+net/flyingprefix/skywars/commands/SetupCommand.class
+net/flyingprefix/skywars/game/GameManager.class
+net/flyingprefix/skywars/teams/Team.class
+net/flyingprefix/skywars/commands/ForceMapCommand.class
+net/flyingprefix/skywars/game/GameState.class
+net/flyingprefix/skywars/maps/GameMap.class
