@@ -47,6 +47,9 @@ public class SetupCommand implements CommandExecutor {
                         SkyWars.getPlugin().getMapManager().setLobby(player.getLocation());
                         player.sendMessage(SkyWars.prefix + "§aLobby gesetzt");
                         break;
+                    case "ready":
+                        SkyWars.getPlugin().getMapManager().setReady();
+                        break;
                     default:
                         break;
                 }

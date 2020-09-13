@@ -9,9 +9,12 @@ import net.flyingprefix.skywars.commands.ForceMapCommand;
 import net.flyingprefix.skywars.commands.SetupCommand;
 import net.flyingprefix.skywars.game.GameManager;
 import net.flyingprefix.skywars.game.GameState;
+import net.flyingprefix.skywars.listeners.PlayerInteractListener;
+import net.flyingprefix.skywars.listeners.PlayerJoinListener;
 import net.flyingprefix.skywars.maps.GameMap;
 import net.flyingprefix.skywars.maps.MapManager;
 import net.flyingprefix.skywars.teams.TeamManager;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -40,14 +43,20 @@ public class SkyWars extends JavaPlugin {
     private void init() {
         plugin = this;
         prefix = "§9SkyWars§8> ";
-        this.gameManager = new GameManager();
+        
         this.mapManager = new MapManager();
         this.teamManager = new TeamManager();
+        this.gameManager = new GameManager(this);
+        
         
         new SetupCommand();
         new ForceMapCommand();
         
-        this.mapManager.getRandomMap();
+        Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerInteractListener(), this);
+        
+        GameMap m = this.plugin.getMapManager().getRandomMap();
+        System.out.println(m.getName());
     }
 
     public static String getPrefix() {

@@ -29,24 +29,27 @@ public class MapManager {
     public File file;
     public YamlConfiguration cfg;
 
+    private Location lobbyLocation;
     private Map<String, GameMap> maps;
-    
+
     public MapManager() {
         this.file = new File(SkyWars.getPlugin().getDataFolder(), "maps.yml");
         this.cfg = YamlConfiguration.loadConfiguration(file);
-        
-        this.maps = new HashMap<>();
 
+        this.maps = new HashMap<>();
         this.loadMaps();
     }
 
     public void loadMaps() {
+        if (cfg.contains("Lobby")) {
+            lobbyLocation = LocationUtil.convertStringToLocation(cfg.getString("Lobby"));
+        }
         if (cfg.contains("Maps")) {
             for (String name : cfg.getConfigurationSection("Maps").getKeys(false)) {
                 GameMap map = new GameMap();
                 map.setName(name);
-                map.setTeams(cfg.getInt("Maps."+name+".Teams"));
-                map.setPerTeam(cfg.getInt("Maps."+name+".PerTeam"));
+                map.setTeams(cfg.getInt("Maps." + name + ".Teams"));
+                map.setPerTeam(cfg.getInt("Maps." + name + ".PerTeam"));
                 ArrayList<Location> spawns = new ArrayList<Location>();
                 for (String locs : cfg.getStringList("Maps." + name + ".Spawns")) {
                     spawns.add(LocationUtil.convertStringToLocation(locs));
@@ -57,16 +60,28 @@ public class MapManager {
             }
         }
     }
-    
+
     public GameMap getMap(String name) {
         GameMap map = maps.get(name);
-        if(map != null) {
+        if (map != null) {
             return map;
         }
-        
+
         return null;
     }
-    
+
+    public boolean isReady() {
+        return cfg.getBoolean("Ready");
+    }
+
+    public void setReady() {
+        if (isReady()) {
+            cfg.set("Ready", false);
+        } else {
+            cfg.set("Ready", true);
+        }
+        save();
+    }
 
     public void setLobby(Location loc) {
         String s = LocationUtil.convertLocationToString(loc);
@@ -94,20 +109,31 @@ public class MapManager {
     }
 
     public GameMap getRandomMap() {
-        if(maps.size() == 0) return null;
-        
+        if (maps.size() == 0) {
+            return null;
+        }
+
         int rnd = new Random().nextInt(maps.size());
         GameMap map = (GameMap) maps.values().toArray()[rnd];
         SkyWars.getPlugin().getGameManager().setMap(map);
+        
         return map;
     }
-    
+
     public int getTeams(String name) {
         return cfg.getInt("Maps." + name + ".Teams");
     }
 
     public List<String> getSpawns(String name) {
         return cfg.getStringList("Maps." + name + ".Spawns");
+    }
+
+    public void setLobbyLocation(Location lobbyLocation) {
+        this.lobbyLocation = lobbyLocation;
+    }
+
+    public Location getLobbyLocation() {
+        return lobbyLocation;
     }
 
     public void save() {
@@ -133,7 +159,5 @@ public class MapManager {
     public Map<String, GameMap> getMaps() {
         return maps;
     }
-    
-    
 
 }
