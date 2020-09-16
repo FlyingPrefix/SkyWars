@@ -9,6 +9,7 @@ import net.flyingprefix.skywars.commands.ForceMapCommand;
 import net.flyingprefix.skywars.commands.SetupCommand;
 import net.flyingprefix.skywars.game.GameManager;
 import net.flyingprefix.skywars.game.GameState;
+import net.flyingprefix.skywars.listeners.InventoryClickListener;
 import net.flyingprefix.skywars.listeners.PlayerInteractListener;
 import net.flyingprefix.skywars.listeners.PlayerJoinListener;
 import net.flyingprefix.skywars.maps.GameMap;
@@ -54,6 +55,7 @@ public class SkyWars extends JavaPlugin {
         
         Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerInteractListener(), this);
+        Bukkit.getPluginManager().registerEvents(new InventoryClickListener(), this);
         
         GameMap m = this.plugin.getMapManager().getRandomMap();
         System.out.println(m.getName());

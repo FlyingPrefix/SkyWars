@@ -53,7 +53,6 @@ public class LobbyPhase extends BukkitRunnable {
     }
 
     public void assignTeams() {
-        System.out.println("Assign Teams");
         for (Player no : teamManager.getPlayersWithNoTeam()) {
             teamManager.setTeam(no, teamManager.getLowestTeam());
         }
